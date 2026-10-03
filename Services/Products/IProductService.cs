@@ -1,6 +1,6 @@
-﻿
 
-namespace App.Services.Product
+
+namespace App.Services.Products
 {
     public interface IProductService
     {

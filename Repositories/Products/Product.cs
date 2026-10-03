@@ -1,4 +1,4 @@
-﻿namespace App.Repositories.Product;
+namespace App.Repositories.Products;
 
 public class Product
 {
