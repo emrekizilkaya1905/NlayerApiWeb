@@ -1,12 +1,26 @@
 using App.Repositories.Products;
+using System.Net;
 
 namespace App.Services.Products
 {
     public class ProductService(IProductRepository productRepository) : IProductService
     {
-        public Task<List<Product>> GetTopPriceProductsAsync(int count)
+        public async Task<ServiceResult<List<Product>>>GetTopPriceProductsAsync(int count)
         {
-            return productRepository.GetTopPriceProductsAsync(count);
+            var products= await productRepository.GetTopPriceProductsAsync(count);
+            return new ServiceResult<List<Product>>
+            {
+                Data = products
+            };
+        }
+        public async Task<ServiceResult<Product>> GetProductByIdAsync(int id)
+        {
+            var product = await productRepository.GetByIdAsync(id);
+            if (product is null)
+            {
+                return ServiceResult<Product>.Fail($"Product with id {id} not found", HttpStatusCode.NotFound);
+            }
+            return ServiceResult<Product>.Success(product!);
         }
     }
 }
