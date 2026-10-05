@@ -16,6 +16,19 @@ namespace App.Services.Products
             return ServiceResult<List<ProductDto>>.Success(products);
         }
 
+        public async Task<ServiceResult<List<ProductDto>>> GetPagedAllListAsync(int pageNumber, int pageSize)
+        {
+            var products = await productRepository.GetAll()
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize).ToListAsync();
+            var productAsDto = products.Select(p => new ProductDto(
+                p.Id,
+                p.Name,
+                p.Price,
+                p.Stock
+            )).ToList();
+            return ServiceResult<List<ProductDto>>.Success(productAsDto);
+        }
         public async Task<ServiceResult<List<ProductDto>>> GetTopPriceProductsAsync(int count)
         {
             var products = await productRepository.GetTopPriceProductsAsync(count);
@@ -37,7 +50,7 @@ namespace App.Services.Products
             {
                 return ServiceResult<ProductDto?>.Fail($"Product with id {id} not found", HttpStatusCode.NotFound);
             }
-            var productAsDto= new ProductDto(
+            var productAsDto = new ProductDto(
                 product!.Id,
                 product.Name,
                 product.Price,
@@ -49,9 +62,9 @@ namespace App.Services.Products
         {
             var product = new Product()
             {
-                Name= request.Name,
-                Price=request.Price,
-                Stock=request.Stock
+                Name = request.Name,
+                Price = request.Price,
+                Stock = request.Stock
             };
             await productRepository.AddAsync(product);
             await unitOfWork.SaveChangesAsync();
