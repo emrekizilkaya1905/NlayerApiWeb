@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.NetworkInformation;
+using System.Text.Json.Serialization;
 
 namespace App.Services
 {
@@ -7,8 +8,11 @@ namespace App.Services
     {
         public T? Data { get; set; }
         public List<string>? ErrorMessages { get; set; }
+        [JsonIgnore]
         public bool IsSuccess => ErrorMessages == null || ErrorMessages.Count == 0;
+        [JsonIgnore]
         public bool IsFail => !IsSuccess;
+        [JsonIgnore]
         public HttpStatusCode Status { get; set; }
         //static factory methods
         public static ServiceResult<T> Success(T data, HttpStatusCode status=HttpStatusCode.OK)
@@ -40,8 +44,11 @@ namespace App.Services
     {
       
         public List<string>? ErrorMessages { get; set; }
+        [JsonIgnore]
         public bool IsSuccess => ErrorMessages == null || ErrorMessages.Count == 0;
+        [JsonIgnore]
         public bool IsFail => !IsSuccess;
+        [JsonIgnore]
         public HttpStatusCode Status { get; set; }
         //static factory methods
         public static ServiceResult Success( HttpStatusCode status = HttpStatusCode.OK)
