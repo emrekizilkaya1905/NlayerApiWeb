@@ -6,7 +6,7 @@ namespace App.Services.Products
     {
         public CreateProductRequestValidator()
         {
-            RuleFor(x=>x.Name).NotNull().NotEmpty().WithMessage("Product name is required.").
+            RuleFor(x=>x.Name).NotEmpty().WithMessage("Product name is required.").
             Length(3,10).WithMessage("Product name must be between 3 and 10 characters.");
             //Price Validation
             RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price must be greater than zero.");
