@@ -53,12 +53,7 @@ namespace App.Services.Products
             {
                 return ServiceResult<CreateProductResponse>.Fail($"Product with name {request.Name} already exists", HttpStatusCode.BadRequest);
             }
-            var product = new Product()
-            {
-                Name = request.Name,
-                Price = request.Price,
-                Stock = request.Stock
-            };
+            var product = mapper.Map<Product>(request);
             await productRepository.AddAsync(product);
             await unitOfWork.SaveChangesAsync();
             return ServiceResult<CreateProductResponse>.SuccessAsCreated(new CreateProductResponse(product.Id), $"api/products/{product.Id}");
@@ -75,9 +70,7 @@ namespace App.Services.Products
             {
                 return ServiceResult.Fail($"Product with name {request.Name} already exists", HttpStatusCode.BadRequest);
             }
-            product!.Name = request.Name;
-            product.Price = request.Price;
-            product.Stock = request.Stock;
+            product = mapper.Map(request, product);
             await unitOfWork.SaveChangesAsync();
             return ServiceResult.Success(HttpStatusCode.NoContent);
         }

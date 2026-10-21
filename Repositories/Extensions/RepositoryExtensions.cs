@@ -1,3 +1,4 @@
+using App.Repositories.Categories;
 using App.Repositories.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +20,7 @@ public static class RepositoryExtensions
             });
         });
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IUnitWork, UnitOfWork>();
         return services;
