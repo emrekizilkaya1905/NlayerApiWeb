@@ -2,6 +2,7 @@ using App.Repositories;
 using App.Repositories.Products;
 using App.Services.Products.Create;
 using App.Services.Products.Update;
+using App.Services.Products.UpdateStock;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
@@ -68,6 +69,11 @@ namespace App.Services.Products
             if (product is null)
             {
                 return ServiceResult.Fail($"Product with id {id} not found", HttpStatusCode.NotFound);
+            }
+            var isProductNameExist = await productRepository.Where(p => p.Name == request.Name && p.Id != id).AnyAsync();
+            if (isProductNameExist)
+            {
+                return ServiceResult.Fail($"Product with name {request.Name} already exists", HttpStatusCode.BadRequest);
             }
             product!.Name = request.Name;
             product.Price = request.Price;

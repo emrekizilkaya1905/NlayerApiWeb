@@ -2,6 +2,7 @@
 
 using App.Services.Products.Create;
 using App.Services.Products.Update;
+using App.Services.Products.UpdateStock;
 
 namespace App.Services.Products
 {

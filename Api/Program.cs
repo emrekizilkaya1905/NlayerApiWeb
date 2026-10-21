@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<FluentValidationFilter>();
-    options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes= true
+    options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true
     ;
 });
 builder.Services.Configure<ApiBehaviorOptions>(options =>
@@ -22,6 +22,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddRepositories(builder.Configuration).AddServices(builder.Configuration);
 var app = builder.Build();
+app.UseExceptionHandler(x => { });
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
