@@ -9,7 +9,7 @@ namespace App.Repositories.Categories
            return context.Categories.Include(c => c.Products).FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public IQueryable<Category?> GetCategoryWithProductsAsync()
+        public IQueryable<Category?> GetCategoryWithProducts()
         {
             return context.Categories.Include(c => c.Products).AsQueryable();
         }
