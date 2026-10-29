@@ -3,13 +3,15 @@ using System.Linq.Expressions;
 
 namespace App.Repositories
 {
-    public class GenericRepository<T>(AppDbContext context) : IGenericRepository<T> where T : class
+    public class GenericRepository<T,Tid>(AppDbContext context) : IGenericRepository<T,Tid> where T : BaseEntity<Tid> where Tid : struct
     {
         protected  AppDbContext Context=context;
         private readonly DbSet<T> _dbSet = context.Set<T>();
+
+        public Task<bool>AnyAsync(Tid id) => _dbSet.AnyAsync(x => x.Id.Equals(id));
         public IQueryable<T> GetAll() => _dbSet.AsQueryable().AsNoTracking();
         public IQueryable<T> Where(Expression<Func<T, bool>> predicate) => _dbSet.Where(predicate).AsNoTracking();
-        public ValueTask<T?> GetByIdAsync(int id) => _dbSet.FindAsync(id);
+        public ValueTask<T?> GetByIdAsync(Tid id) => _dbSet.FindAsync(id);
 
         public async ValueTask AddAsync(T entity)
         {

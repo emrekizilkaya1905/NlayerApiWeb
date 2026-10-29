@@ -26,6 +26,7 @@ namespace App.Repositories.Interceptors
             foreach (var entry in eventData.Context!.ChangeTracker.Entries())
             {
                 if (entry.Entity is not IAuditEntity auditEntity) continue;
+                if(entry.State is not (EntityState.Added or EntityState.Modified)) continue;
 
                 Behaviors[entry.State](eventData.Context, auditEntity);
             }

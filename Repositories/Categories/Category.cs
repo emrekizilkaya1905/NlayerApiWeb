@@ -2,7 +2,7 @@
 
 namespace App.Repositories.Categories
 {
-    public class Category: IAuditEntity
+    public class Category: BaseEntity<int>, IAuditEntity
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;

@@ -14,7 +14,7 @@ namespace App.Services.Products
         public async Task<ServiceResult<List<ProductDto>>> GetAllListAsync()
         {
             var products = await productRepository.GetAll().ToListAsync();
-            var productAsDto=mapper.Map<List<ProductDto>>(products);
+            var productAsDto = mapper.Map<List<ProductDto>>(products);
 
             return ServiceResult<List<ProductDto>>.Success(productAsDto);
         }
@@ -30,7 +30,7 @@ namespace App.Services.Products
         public async Task<ServiceResult<List<ProductDto>>> GetTopPriceProductsAsync(int count)
         {
             var products = await productRepository.GetTopPriceProductsAsync(count);
-            var productAsDto=mapper.Map<List<ProductDto>>(products);
+            var productAsDto = mapper.Map<List<ProductDto>>(products);
             return new ServiceResult<List<ProductDto>>
             {
                 Data = productAsDto
@@ -48,8 +48,8 @@ namespace App.Services.Products
         }
         public async Task<ServiceResult<CreateProductResponse>> CreateAsync(CreateProductRequest request)
         {
-            var anyProduct= await productRepository.Where(p => p.Name == request.Name).AnyAsync();
-            if(anyProduct)
+            var anyProduct = await productRepository.Where(p => p.Name == request.Name).AnyAsync();
+            if (anyProduct)
             {
                 return ServiceResult<CreateProductResponse>.Fail($"Product with name {request.Name} already exists", HttpStatusCode.BadRequest);
             }
@@ -60,21 +60,18 @@ namespace App.Services.Products
         }
         public async Task<ServiceResult> UpdateAsync(int id, UpdateProductRequest request)
         {
-            var product = await productRepository.GetByIdAsync(id);
-            if (product is null)
-            {
-                return ServiceResult.Fail($"Product with id {id} not found", HttpStatusCode.NotFound);
-            }
+
             var isProductNameExist = await productRepository.Where(p => p.Name == request.Name && p.Id != id).AnyAsync();
             if (isProductNameExist)
             {
                 return ServiceResult.Fail($"Product with name {request.Name} already exists", HttpStatusCode.BadRequest);
             }
-            product = mapper.Map(request, product);
+            var product = mapper.Map<Product>(request);
+            product.Id = id;
             await unitOfWork.SaveChangesAsync();
             return ServiceResult.Success(HttpStatusCode.NoContent);
         }
-     
+
         public async Task<ServiceResult> UpdateStockAsync(UpdateProductStockRequest request)
         {
             var product = await productRepository.GetByIdAsync(request.ProductId);
@@ -89,10 +86,7 @@ namespace App.Services.Products
         public async Task<ServiceResult> DeleteAsync(int id)
         {
             var product = await productRepository.GetByIdAsync(id);
-            if (product is null)
-            {
-                return ServiceResult.Fail($"Product with id {id} not found", HttpStatusCode.NotFound);
-            }
+
             productRepository.Delete(product);
             await unitOfWork.SaveChangesAsync();
             return ServiceResult.Success(HttpStatusCode.NoContent);
