@@ -1,5 +1,20 @@
 <Solution>
-  <Project Path="Api/App.Api.csproj" />
-  <Project Path="Repositories/App.Repositories.csproj" />
-  <Project Path="Services/App.Services.csproj" />
+  <Folder Name="/CleanArch/" />
+  <Folder Name="/CleanArch/Src/" />
+  <Folder Name="/CleanArch/Src/API/">
+    <Project Path="CleanApp.API/CleanApp.API.csproj" Id="94d9638c-e752-49a8-b0b3-d062b832d0d5" />
+  </Folder>
+  <Folder Name="/CleanArch/Src/Core/">
+    <Project Path="App.Application/App.Application.csproj" Id="f33a866f-dc9a-42db-b6d6-17eeebf82c1f" />
+    <Project Path="App.Domain/App.Domain.csproj" Id="6ad2373d-f55c-4e8d-b2fa-00499acdab75" />
+  </Folder>
+  <Folder Name="/CleanArch/Src/Infrastructure/">
+    <Project Path="App.Persistence/App.Persistence.csproj" Id="7c3da472-28ba-418d-b241-10b3a9a2b872" />
+  </Folder>
+  <Folder Name="/CleanArch/Test/" />
+  <Folder Name="/NLayer/">
+    <Project Path="Api/App.Api.csproj" />
+    <Project Path="Repositories/App.Repositories.csproj" />
+    <Project Path="Services/App.Services.csproj" />
+  </Folder>
 </Solution>
