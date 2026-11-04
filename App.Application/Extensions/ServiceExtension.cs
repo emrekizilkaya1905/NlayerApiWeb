@@ -26,7 +26,7 @@ namespace App.Application.Extensions
             services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(cfg => { }, Assembly.GetExecutingAssembly());
-                        return services;
+            return services;
         }
     }
 }

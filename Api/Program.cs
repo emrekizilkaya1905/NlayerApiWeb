@@ -1,7 +1,6 @@
 using App.Repositories.Extensions;
 using App.Services;
 using App.Services.Extensions;
-using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
