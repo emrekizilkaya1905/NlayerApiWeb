@@ -1,8 +1,6 @@
 <Solution>
   <Folder Name="/CleanArch/" />
-  <Folder Name="/CleanArch/Src/">
-    <File Path="Repositories/ConnectionStringOption.cs" />
-  </Folder>
+  <Folder Name="/CleanArch/Src/" />
   <Folder Name="/CleanArch/Src/API/">
     <Project Path="CleanApp.API/CleanApp.API.csproj" Id="94d9638c-e752-49a8-b0b3-d062b832d0d5" />
   </Folder>
