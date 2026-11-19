@@ -2,6 +2,7 @@ using App.Application.Extensions;
 using App.Persistence;
 using CleanApp.API.ExceptionHandler;
 using CleanApp.API.Filters;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,7 @@ app.UseExceptionHandler(x => { });
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/openapi/v1.json", "CleanApp API v1");
